@@ -1,5 +1,5 @@
 import { ensureUser } from '../../middleware/validators'
-import * as user from './controller'
+import * as media from './controller'
 
 export const baseUrl = '/media'
 
@@ -8,41 +8,41 @@ export default [
     method: 'POST',
     route: '/',
     handlers: [
-      user.createUser
+      // user.createUser
     ]
   },
   {
     method: 'GET',
-    route: '/',
+    route: '/:page',
     handlers: [
-      ensureUser,
-      user.getUsers
+      // ensureUser,
+      media.getMedia
     ]
   },
-  {
-    method: 'GET',
-    route: '/:id',
-    handlers: [
-      ensureUser,
-      user.getUser
-    ]
-  },
-  {
-    method: 'PUT',
-    route: '/:id',
-    handlers: [
-      ensureUser,
-      user.getUser,
-      user.updateUser
-    ]
-  },
+  // {
+  //   method: 'GET',
+  //   route: '/:id',
+  //   handlers: [
+  //     // ensureUser,
+  //     // user.getUser
+  //   ]
+  // },
+  // {
+  //   method: 'PUT',
+  //   route: '/:id',
+  //   handlers: [
+  //     // ensureUser,
+  //     // user.getUser,
+  //     // user.updateUser
+  //   ]
+  // },
   {
     method: 'DELETE',
     route: '/:id',
     handlers: [
-      ensureUser,
-      user.getUser,
-      user.deleteUser
+      // ensureUser,
+      // user.getUser,
+      // user.deleteUser
     ]
   }
 ]

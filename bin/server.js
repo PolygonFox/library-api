@@ -7,7 +7,7 @@ import session from 'koa-generic-session'
 import passport from 'koa-passport'
 import mount from 'koa-mount'
 import serve from 'koa-static'
-
+import cors from 'koa2-cors'
 import config from '../config'
 import { errorMiddleware } from '../src/middleware'
 import MediaWatcher from '../src/utils/MediaWatcher'
@@ -21,6 +21,9 @@ mongoose.connect(config.database,  { useMongoClient: true })
 
 app.use(convert(logger()))
 app.use(bodyParser())
+app.use(cors({
+  origin: '*'
+}))
 app.use(session())
 app.use(errorMiddleware())
 

@@ -1,43 +1,6 @@
 import User from '../../models/users'
+import Media from '../../models/media'
 
-/**
- * @api {post} /users Create a new user
- * @apiPermission
- * @apiVersion 1.0.0
- * @apiName CreateUser
- * @apiGroup Users
- *
- * @apiExample Example usage:
- * curl -H "Content-Type: application/json" -X POST -d '{ "user": { "username": "johndoe", "password": "secretpasas" } }' localhost:5000/users
- *
- * @apiParam {Object} user          User object (required)
- * @apiParam {String} user.username Username.
- * @apiParam {String} user.password Password.
- *
- * @apiSuccess {Object}   users           User object
- * @apiSuccess {ObjectId} users._id       User id
- * @apiSuccess {String}   users.name      User name
- * @apiSuccess {String}   users.username  User username
- *
- * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
- *     {
- *       "user": {
- *          "_id": "56bd1da600a526986cf65c80"
- *          "name": "John Doe"
- *          "username": "johndoe"
- *       }
- *     }
- *
- * @apiError UnprocessableEntity Missing required parameters
- *
- * @apiErrorExample {json} Error-Response:
- *     HTTP/1.1 422 Unprocessable Entity
- *     {
- *       "status": 422,
- *       "error": "Unprocessable Entity"
- *     }
- */
 export async function createUser (ctx) {
   const user = new User(ctx.request.body.user)
   try {
@@ -57,36 +20,15 @@ export async function createUser (ctx) {
   }
 }
 
-/**
- * @api {get} /users Get all users
- * @apiPermission user
- * @apiVersion 1.0.0
- * @apiName GetUsers
- * @apiGroup Users
- *
- * @apiExample Example usage:
- * curl -H "Content-Type: application/json" -X GET localhost:5000/users
- *
- * @apiSuccess {Object[]} users           Array of user objects
- * @apiSuccess {ObjectId} users._id       User id
- * @apiSuccess {String}   users.name      User name
- * @apiSuccess {String}   users.username  User username
- *
- * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
- *     {
- *       "users": [{
- *          "_id": "56bd1da600a526986cf65c80"
- *          "name": "John Doe"
- *          "username": "johndoe"
- *       }]
- *     }
- *
- * @apiUse TokenError
- */
-export async function getUsers (ctx) {
-  const users = await User.find({}, '-password')
-  ctx.body = { users }
+export async function getMedia (ctx) {
+  const page_num  = ctx.params.page;
+
+
+  const skips = 10 * (page_num - 1)
+
+
+  const media = await Media.find({ }).sort({ 'createdAt': -1 }).skip(skips).limit(10)
+  ctx.body = { media }
 }
 
 /**

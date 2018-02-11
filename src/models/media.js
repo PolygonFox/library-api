@@ -8,10 +8,14 @@ var tagSchema = new mongoose.Schema({
 const Media = new mongoose.Schema({
   name: { type: String },
   path: { type: String },
+  thumbnail: { type: String },
   checksum: { type: String },
   type: { type: String, enum: ['PHOTO', 'VIDEO', 'FILE'] },
-  size: { type: Number },
+  width: { type: Number },
+  height: { type: Number },
   tags: [tagSchema]
+}, {
+    timestamps: true
 })
 
 Media.pre('save', function preSave(next) {
